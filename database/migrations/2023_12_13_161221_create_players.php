@@ -14,9 +14,9 @@ return new class extends Migration
         Schema::create('players', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
-            $table->string('mensaje');
+            $table->string('mensaje')->nullable();
             $table->integer('puntos');
-            $table->integer('skin');
+            $table->integer('skin')->nullable();
             $table->timestamps();
         });
     }

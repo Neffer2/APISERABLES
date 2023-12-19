@@ -40,10 +40,13 @@ use App\Http\Controllers\ApiController;
 */
 
 Route::middleware( 'auth:sanctum')->get('/user', function (Request $request) {
-    return $request->user();
+    return $request->user(); 
 });
 
 
 Route::get('/ranking', [ApiController::class, 'index']);
+Route::get('/check-position/{score}', [ApiController::class, 'checkPosition']);
+
+Route::post('/new-player', [ApiController::class, 'newPlayer']);
 
 /* Se van a subir todos, y que sql calcule solo */
