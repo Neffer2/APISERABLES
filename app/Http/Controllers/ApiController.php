@@ -29,8 +29,9 @@ class ApiController extends Controller
     }
 
     public function checkPosition($score){
-        $top1 = Player::limit(1)->orderBy('puntos', 'DESC')->first();
-        $top10 = Player::limit(1)->orderBy('puntos', 'ASC')->first();
+        $players = Player::limit(20)->orderBy('puntos', 'DESC')->get();
+        $top1 = $players->first();
+        $top10 = $players->sortByDesc('puntos')->first();
 
         $response = [
             "status" => "success",
@@ -39,13 +40,18 @@ class ApiController extends Controller
             "body" => "",
         ];
 
-        if ($score > $top1->puntos){
+        if ((!$top1) || ($score > $top1->puntos)){
             $response['body'] = 'top1';
-
             return response()->json($response);
-        }elseif ($score > $top10->puntos){
-            $response['body'] = 'top10';
+        }
 
+        if ($players->count() < 10){
+            $response['body'] = 'top10';
+            return response()->json($response);
+        }
+        
+        if ($score > $top10->puntos){
+            $response['body'] = 'top10';
             return response()->json($response);
         }
         
@@ -54,21 +60,21 @@ class ApiController extends Controller
     }
 
     public function newPlayer(Request $request){
-
         $player = new Player;
         $player->nombre = $request->nombre;
         $player->mensaje = $request->mensaje;
         $player->puntos = $request->puntos;
-        $player->skin = NULL;
-        $player->save();
+        $player->skin = NULL;        
 
-        $response = [
-            "status" => "success",
-            "code" => 200,
-            "message" => "Solicitud exitosa",
-            "body" => "",
-        ];
+        if ($player->save()){
+            $response = [
+                "status" => "success",
+                "code" => 200,
+                "message" => "Solicitud exitosa",
+                "body" => "",
+            ];
 
-        return response()->json($response);
+            return response()->json($response);
+        }
     }
 }
