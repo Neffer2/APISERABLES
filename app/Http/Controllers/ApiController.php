@@ -31,7 +31,7 @@ class ApiController extends Controller
     public function checkPosition($score){
         $players = Player::limit(20)->orderBy('puntos', 'DESC')->get();
         $top1 = $players->first();
-        $top10 = $players->sortByDesc('puntos')->first();
+        $top10 = $players->sortBy('puntos')->first();
 
         $response = [
             "status" => "success",
