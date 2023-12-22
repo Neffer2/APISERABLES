@@ -40,7 +40,7 @@ class ApiController extends Controller
             "body" => "",
         ];
 
-        if ((!$top1) || ($score > $top1->puntos)){
+        if ((!$top1) || ($score >= $top1->puntos)){
             $response['body'] = 'top1';
             return response()->json($response);
         }
