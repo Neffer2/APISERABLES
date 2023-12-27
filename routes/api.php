@@ -46,6 +46,7 @@ Route::middleware( 'auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/ranking', [ApiController::class, 'index']);
 Route::get('/check-position/{score}', [ApiController::class, 'checkPosition']);
+Route::get('/top1', [ApiController::class, 'getTop1']);
 
 Route::post('/new-player', [ApiController::class, 'newPlayer']);
 

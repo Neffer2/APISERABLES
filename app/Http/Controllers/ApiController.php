@@ -8,7 +8,7 @@ use App\Models\Player;
 class ApiController extends Controller
 {
     public function index(){
-        $players = Player::limit(10)->orderBy('puntos', 'DESC')->get();
+        $players = Player::where('created_at', '>', now()->subDays(1))->limit(10)->orderBy('puntos', 'DESC')->get();
 
         if ($players){
             $reponse = [
@@ -28,8 +28,20 @@ class ApiController extends Controller
         return response()->json($reponse);
     }
 
+    public function getTop1(){
+        $top1 = Player::where('created_at', '>', now()->subDays(1))->limit(1)->orderBy('puntos', 'DESC')->first();
+        $response = [
+            "status" => "success",
+            "code" => 200,
+            "message" => "Solicitud exitosa",
+            "body" => $top1,
+        ];
+
+        return response()->json($response);
+    } 
+
     public function checkPosition($score){
-        $players = Player::limit(20)->orderBy('puntos', 'DESC')->get();
+        $players = Player::where('created_at', '>', now()->subDays(1))->limit(20)->orderBy('puntos', 'DESC')->get();
         $top1 = $players->first();
         $top10 = $players->sortBy('puntos')->first();
 
