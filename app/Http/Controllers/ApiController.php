@@ -89,7 +89,7 @@ class ApiController extends Controller
         $player = new Player;
         $player->nombre = $request->nombre;
         if ($request->mensaje){
-            $player->mensaje = substr($request->mensaje, 0, 20);
+            $player->mensaje = substr($request->mensaje, 0, 50);
         }
         $player->puntos = $request->puntos;
         $player->skin = NULL;        
