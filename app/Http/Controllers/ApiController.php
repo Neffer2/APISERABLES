@@ -87,7 +87,7 @@ class ApiController extends Controller
         ]);
 
         $player = new Player;
-        $player->nombre = $request->nombre;
+        $player->nombre = substr($request->nombre, 0, 30);
         if ($request->mensaje){
             $player->mensaje = substr($request->mensaje, 0, 50);
         }
