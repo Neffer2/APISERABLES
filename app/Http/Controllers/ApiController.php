@@ -79,9 +79,18 @@ class ApiController extends Controller
     }
 
     public function newPlayer(Request $request){
+
+        $request->validate([
+            'nombre' => 'required|string',
+            'mensaje' => 'string',
+            'puntos' => 'numeric',
+        ]);
+
         $player = new Player;
         $player->nombre = $request->nombre;
-        $player->mensaje = $request->mensaje;
+        if ($request->mensaje){
+            $player->mensaje = substr($request->mensaje, 0, 20);
+        }
         $player->puntos = $request->puntos;
         $player->skin = NULL;        
 
