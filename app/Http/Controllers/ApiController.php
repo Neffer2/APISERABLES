@@ -31,13 +31,15 @@ class ApiController extends Controller
     public function getTop1(){
         $top1 = Player::where('created_at', '>', now()->subDays(1))->limit(1)->orderBy('puntos', 'DESC')->first();
 
+        $response = [
+            "status" => "success",
+            "code" => 200,
+            "message" => "Solicitud exitosa",
+            "body" => $top1,
+        ];
+
         if ($top1){
-            $response = [
-                "status" => "success",
-                "code" => 200,
-                "message" => "Solicitud exitosa",
-                "body" => $top1,
-            ];
+            $response['body'] = $top1;
         }else {
             $response['body'] = '';
         }
